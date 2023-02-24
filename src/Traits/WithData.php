@@ -127,6 +127,7 @@ trait WithData
         }
 
         foreach ($this->getSelectableColumns() as $column) {
+            if ($column->getTable() === null) continue;
             $this->setBuilder($this->getBuilder()->addSelect($column->getColumn() . ' as ' .$column->getColumnSelectName()));
         }
 

@@ -120,7 +120,11 @@ trait ColumnHelpers
      */
     public function getColumn(): ?string
     {
-        return $this->getTable() . '.' . $this->getField();
+        $table = $this->getTable();
+        if ($table !== null) {
+            return $table.'.'.$this->getField();
+        }
+        return $this->getField();
     }
 
     /**
@@ -540,7 +544,7 @@ trait ColumnHelpers
             if (is_bool($attributes[$key])) {
                 return $attributes[$key] ? $key : '';
             }
-            
+
             return $key . '="' . $attributes[$key] . '"';
         }, array_keys($attributes)));
     }

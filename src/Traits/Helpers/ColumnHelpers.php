@@ -19,7 +19,9 @@ trait ColumnHelpers
 
                 if ($column->hasField()) {
                     if ($column->isBaseColumn()) {
-                        $column->setTable($this->getBuilder()->getModel()->getTable());
+                        if (!str_ends_with($column->getField(), '_count')) {
+                            $column->setTable($this->getBuilder()->getModel()->getTable());
+                        }
                     } else {
                         $column->setTable($this->getTableForColumn($column));
                     }
