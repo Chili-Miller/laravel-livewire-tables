@@ -69,15 +69,24 @@ trait SortingConfiguration
     }
 
     /**
-     * @param  string  $field
+     * @param  string[]|array  $field
      * @param  string  $direction
      *
      * @return $this
      */
-    public function setDefaultSort(string $field, string $direction = 'asc'): self
+    public function setDefaultSort(array|string $fields, string $direction = 'asc'): self
     {
-        $this->defaultSortColumn = $field;
-        $this->defaultSortDirection = $direction;
+        if (!is_array($fields)) {
+            $fields = [$fields => $direction];
+        } else {
+            if (!\Arr::isAssoc($fields)) {
+                foreach ($fields as $i => $field) {
+                    $fields[$field] = $direction;
+                    unset($fields[$i]);
+                }
+            }
+        }
+        $this->defaultSortColumns = $fields;
 
         return $this;
     }
@@ -87,8 +96,7 @@ trait SortingConfiguration
      */
     public function removeDefaultSort(): self
     {
-        $this->defaultSortColumn = null;
-        $this->defaultSortDirection = 'asc';
+        $this->defaultSortColumns = null;
 
         return $this;
     }

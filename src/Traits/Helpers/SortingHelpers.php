@@ -170,23 +170,15 @@ trait SortingHelpers
      */
     public function hasDefaultSort(): bool
     {
-        return $this->getDefaultSortColumn() !== null;
+        return $this->getDefaultSortColumns() !== null;
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getDefaultSortColumn(): ?string
+    public function getDefaultSortColumns(): ?array
     {
-        return $this->defaultSortColumn;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultSortDirection(): string
-    {
-        return $this->defaultSortDirection;
+        return $this->defaultSortColumns;
     }
 
     /**
